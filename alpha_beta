@@ -1,0 +1,22 @@
+def alpha_beta(tree, alpha, beta, is_max):
+    if isinstance(tree, int):  # base case: leaf node
+        return tree
+
+    if is_max:
+        value = -math.inf
+        for child in tree:
+            child_value = alpha_beta(child, alpha, beta, False)
+            value = max(value, child_value)
+            alpha = max(alpha, value)
+            if alpha >= beta:  # pruning
+                break
+        return value
+    else:
+        value = math.inf
+        for child in tree:
+            child_value = alpha_beta(child, alpha, beta, True)
+            value = min(value, child_value)
+            beta = min(beta, value)  # ← correction here
+            if alpha >= beta:
+                break
+        return value
